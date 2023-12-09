@@ -1,11 +1,28 @@
 require('dotenv').config();
-let mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 console.log(process.env.MONGO_URI);
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://sauravsayana:f7mSmRGtdu7fQ8TR@pracmongoose.crrpbib.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+        .then(() => {
+          console.log('database connection successful')
+        })
+        .catch((err) => {
+          console.error('Database connection error')
+        })
+let personSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  age: Number,
+  id: {
+    type: String,
+    unique: true
+  }
+});
 
-let Person;
+let Person = mongoose.model('Person', personSchema);
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
@@ -53,7 +70,7 @@ const queryChain = (done) => {
   const foodToSearch = "burrito";
 
   done(null /*, data*/);
-};
+}; 
 
 /** **Well Done !!**
 /* You completed these challenges, let's go celebrate !
