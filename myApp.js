@@ -11,21 +11,40 @@ mongoose.connect('mongodb+srv://sauravsayana:f7mSmRGtdu7fQ8TR@pracmongoose.crrpb
           console.error('Database connection error')
         })
 let personSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    unique: true
+  },
   name: {
     type: String,
     required: true
   },
-  age: Number,
-  id: {
-    type: String,
-    unique: true
-  }
+  age: Number
 });
 
 let Person = mongoose.model('Person', personSchema);
 
+
+
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+  
+  let person = new Person({
+    id: 3,
+    name: "John",
+    age: 30,
+  })
+
+  person.save()
+    .then((data) => {
+      console.log(data);
+      done(null , data);
+    })
+    .catch((err) => {
+      console.error(err);
+      done(null , data);
+    })
+  
+  
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
@@ -71,6 +90,20 @@ const queryChain = (done) => {
 
   done(null /*, data*/);
 }; 
+
+createAndSavePerson((err, savedPerson) => {
+  if(err){
+    console.error("Error saving the Person details in mongoDB: ", err);
+  }
+  else{
+    console.log("Person successfully added to mongoDB: ", savedPerson)
+  }
+});
+
+
+
+
+
 
 /** **Well Done !!**
 /* You completed these challenges, let's go celebrate !
