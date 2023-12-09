@@ -5,7 +5,7 @@ console.log(process.env.MONGO_URI);
 
 
 // Connecting to the Atlas MongoDB
-mongoose.connect('mongodb+srv://sauravsayana:f7mSmRGtdu7fQ8TR@pracmongoose.crrpbib.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => {
           console.log('database connection successful') // if connection is successfull
         })
