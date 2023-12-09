@@ -3,48 +3,45 @@ const mongoose = require("mongoose");
 
 console.log(process.env.MONGO_URI);
 
+
+// Connecting to the Atlas MongoDB
 mongoose.connect('mongodb+srv://sauravsayana:f7mSmRGtdu7fQ8TR@pracmongoose.crrpbib.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => {
-          console.log('database connection successful')
+          console.log('database connection successful') // if connection is successfull
         })
         .catch((err) => {
-          console.error('Database connection error')
-        })
+          console.error('Database connection error') // Throws error in case of connection error
+        });
+
+// Creating the Schema for person MongoDB
 let personSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    unique: true
-  },
   name: {
     type: String,
     required: true
   },
-  age: Number
+  age: Number,
+  favoriteFoods: String,
 });
 
+// Creating the Person Model using the personSchema
 let Person = mongoose.model('Person', personSchema);
 
-
-
+// Function to Add and Save Person details in the MongoDB
 const createAndSavePerson = (done) => {
   
   let person = new Person({
-    id: 3,
     name: "John",
     age: 30,
+    favoriteFoods: "Pizza"
   })
 
   person.save()
     .then((data) => {
-      console.log(data);
       done(null , data);
     })
     .catch((err) => {
-      console.error(err);
-      done(null , data);
+      done(err);
     })
-  
-  
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
