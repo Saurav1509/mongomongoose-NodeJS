@@ -1,16 +1,16 @@
-require('dotenv').config();
+const dotenv = require('dotenv');
+dotenv.config({ path: './variables.env' });
 const mongoose = require("mongoose");
 
-console.log(process.env.MONGO_URI);
-
+mongoUrl = process.env.MONGO_URI;
 
 // Connecting to the Atlas MongoDB
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => {
           console.log('database connection successful') // if connection is successfull
         })
         .catch((err) => {
-          console.error('Database connection error') // Throws error in case of connection error
+          console.error('Database connection error: ', err) // Throws error in case of connection error
         });
 
 // Creating the Schema for person MongoDB
