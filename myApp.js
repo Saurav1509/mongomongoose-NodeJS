@@ -30,9 +30,9 @@ let Person = mongoose.model('Person', personSchema);
 const createAndSavePerson = (done) => {
   
   let person = new Person({
-    name: "Saurav",
+    name: "Sayana",
     age: 24,
-    favoriteFoods: "Burger"
+    favoriteFoods: "Sandwich"
   })
 
   person.save()
@@ -45,7 +45,16 @@ const createAndSavePerson = (done) => {
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  
+  Person.create(arrayOfPeople)
+    .then((data) => {
+      done(null, data);
+    })
+    .catch((err) => {
+      done(err);
+    })
+  
+  // done(null /*, data*/);
 };
 
 const findPeopleByName = (personName, done) => {
@@ -88,16 +97,39 @@ const queryChain = (done) => {
   done(null /*, data*/);
 }; 
 
-createAndSavePerson((err, savedPerson) => {
+// createAndSavePerson((err, savedPerson) => {
+//   if(err){
+//     console.error("Error saving the Person details in mongoDB: ", err);
+//   }
+//   else{
+//     console.log("Person successfully added to mongoDB: ", savedPerson)
+//   }
+// });
+
+let listOfPeopleToAdd = [{
+  name: "Jacobs",
+  age: 25,
+  favoriteFoods: "Biryani"
+},
+{
+  name: "Sam",
+  age: 29,
+  favoriteFoods: "Paratha"
+},
+{
+  name: "Naomi",
+  age: 34,
+  favoriteFoods: "Pasta"
+}];
+
+createManyPeople(listOfPeopleToAdd,(err, listOfSavedPersons) => {
   if(err){
-    console.error("Error saving the Person details in mongoDB: ", err);
+    console.error("Error Saving list of Persons in DB: ", err);
   }
   else{
-    console.log("Person successfully added to mongoDB: ", savedPerson)
+    console.log("Successfully added the list of Persons in DB: ", listOfSavedPersons);
   }
 });
-
-
 
 
 
